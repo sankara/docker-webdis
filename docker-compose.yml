@@ -1,6 +1,31 @@
-webdis:
-  build: .
-  ports:
-   - '7379:7379'
-  environment:
-   - LOCAL_REDIS=true
+version: '3.7'
+
+
+services:
+  cache:
+    image: "redis:alpine"
+    volumes:
+      - /mnt/cache/redis:/data
+    entrypoint: "redis-server --appendonly yes"
+    restart: always
+    expose:
+      - "6379"
+
+  webdis:
+    links:
+     - cache
+    build: .
+    ports:
+      - '7379:7379'
+    environment:
+      LOCAL_REDIS: "true"
+      VIRTUAL_HOST: cache.dev.sankara.me
+      VIRTUAL_PORT: 7379
+      LETSENCRYPT_HOST: cache.dev.sankara.me
+      LETSENCRYPT_EMAIL: admin@sankara.me
+      ENABLE_IPV6: "true"
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
