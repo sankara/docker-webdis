@@ -19,9 +19,9 @@ services:
       - '7379:7379'
     environment:
       LOCAL_REDIS: "true"
-      VIRTUAL_HOST: cache.dev.sankara.me
+      VIRTUAL_HOST: cache.sankara.me
       VIRTUAL_PORT: 7379
-      LETSENCRYPT_HOST: cache.dev.sankara.me
+      LETSENCRYPT_HOST: cache.sankara.me
       LETSENCRYPT_EMAIL: admin@sankara.me
       ENABLE_IPV6: "true"
 
